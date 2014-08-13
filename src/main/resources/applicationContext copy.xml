@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+			 xmlns:util="http://www.springframework.org/schema/util"
+			 xsi:schemaLocation="http://www.springframework.org/schema/util
+			 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+			 http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+
+  <description>
+		This file contains spring config for Allison's Inn app
+	</description>
+
+
+	<!-- Begin Inventory Item config -->
+	<bean id="inn.item.VestOfHalfDecimalAddition" class="com.ratgut.allisinn.inventman.StandardInventoryItem">
+		<property name="name" value="+5 Dexterity Vest"/>
+		<property name="sellIn" value="10"/>
+		<property name="quality" value="20"/>
+		<property name="qualityProfile">
+			<bean class="com.ratgut.allisinn.inventman.Depreciator">
+				<property name="timeUnitName">
+					<util:constant static-field="com.ratgut.allisinn.config.Constants.TIME_UNIT_NAME_DAY"/>
+				</property>
+				<property name="normalDepreciationRate" value="1"/>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="inn.item.AgedBrie" class="com.ratgut.allisinn.inventman.StandardInventoryItem">
+		<property name="name" value="Aged Brie"/>
+		<property name="sellIn" value="2"/>
+		<property name="quality" value="0"/>
+		<property name="qualityProfile">
+			<bean class="com.ratgut.allisinn.inventman.Appreciator">
+				<property name="timeUnitName">
+					<util:constant static-field="com.ratgut.allisinn.config.Constants.TIME_UNIT_NAME_DAY"/>
+				</property>
+				<property name="appreciationRate" value="1"/>
+				<property name="maxValue">
+					<util:constant static-field="com.ratgut.allisinn.config.Constants.STD_MAX_QUALITY"/>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="inn.item.MongooseJuice" class="com.ratgut.allisinn.inventman.StandardInventoryItem">
+		<property name="name" value="Elixir of the Mongoose"/>
+		<property name="sellIn" value="5"/>
+		<property name="quality" value="7"/>
+		<property name="qualityProfile">
+			<bean class="com.ratgut.allisinn.inventman.Depreciator">
+				<property name="timeUnitName">
+					<util:constant static-field="com.ratgut.allisinn.config.Constants.TIME_UNIT_NAME_DAY"/>
+				</property>
+				<property name="normalDepreciationRate" value="1"/>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="inn.item.SulfuricHand" class="com.ratgut.allisinn.inventman.StandardInventoryItem">
+		<property name="name" value="Sulfuras, Hand of Ragnaros"/>
+		<property name="sellIn" value="0"/>
+		<property name="quality" value="80"/>
+		<property name="qualityProfile">
+			<bean class="com.ratgut.allisinn.inventman.StaticProfile"/>
+		</property>
+	</bean>
+
+	<bean id="inn.item.TAFKAL80ETC_Passes" class="com.ratgut.allisinn.inventman.EventAccessInventoryItem">
+		<property name="name" value="Backstage passes to a TAFKAL80ETC concert"/>
+		<property name="sellIn" value="15"/>
+		<property name="quality" value="20"/>
+		<property name="timeUnitNameForQualityChange">
+			<util:constant static-field="com.ratgut.allisinn.config.Constants.TIME_UNIT_NAME_DAY"/>
+		</property>
+	</bean>
+
+	<bean id="inn.item.ConjuredManCake" class="com.ratgut.allisinn.inventman.StandardInventoryItem">
+		<property name="name" value="Conjured Mana Cake"/>
+		<property name="sellIn" value="3"/>
+		<property name="quality" value="6"/>
+		<property name="qualityProfile">
+			<bean class="com.ratgut.allisinn.inventman.Depreciator">
+				<property name="timeUnitName">
+					<util:constant static-field="com.ratgut.allisinn.config.Constants.TIME_UNIT_NAME_DAY"/>
+				</property>
+				<property name="normalDepreciationRate" value="2"/>
+			</bean>
+		</property>
+	</bean>
+
+	<!-- Begin Inventory Manager config -->
+	<bean id="inn.inventoryManager" class="com.ratgut.allisinn.inventman.InventoryManagerOOImpl">
+		<property name="inventoryItems">
+			<ref bean="inn.item.VestOfHalfDecimalAddition" />
+			<ref bean="inn.item.AgedBrie" />
+			<ref bean="inn.item.MongooseJuice" />
+			<ref bean="inn.item.TAFKAL80ETC_Passes" />
+			<ref bean="inn.item.ConjuredManCake" />
+		</property>
+	</bean>
+
+
+</beans>
